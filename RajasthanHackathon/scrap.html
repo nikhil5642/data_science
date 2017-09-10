@@ -1,0 +1,6038 @@
+
+
+<HTML>
+<HEAD>
+
+
+<!--
+
+
+<CFQUERY name="Latestdate" DataSource="Ambdb" Maxrows=1>
+SELECT Rdate from Ratesnew order by rdate desc;
+</CFQUERY>
+
+<CFOutput Query="LatestDate">
+<CFSET Lastdate = #ParseDateTime(dateformat(rdate))#>
+<CFSET tmpmandi = "==">
+</CFOUTPUT>
+<CFOUTPUT>
+-->
+
+<!--
+</CFOUTPUT>
+
+set rs1=server.CreateObject("adodb.recordset")
+rs1.Open "SELECT KUMMST.KUM_Place as VF1,commmstnew.Commnm as VF2, ratesnew.RDate as Vf3 , ratesnew.Rate as VF4, ratesnew.Arrival as VF5, ratesnew.Commcd as VF6 FROM RATESNEW, KUMMST, COMMMSTNEW WHERE ratesnew.KUM_Code=KUMMST.KUM_Code and ratesnew.Commcd=commmstnew.Commcd and ratesnew.rdate=#Lastdate#  ",con,3,2
+
+
+
+
+-->
+
+
+
+
+
+
+<!--
+
+<CFQUERY name="Majorqry" dataSource="AMBDB">
+SELECT KUMMST.KUM_Place as VF1,commmstnew.Commnm as VF2, ratesnew.RDate as Vf3 , ratesnew.Rate as VF4, ratesnew.Arrival as VF5, ratesnew.Commcd as VF6 FROM RATESNEW, KUMMST, COMMMSTNEW WHERE ratesnew.KUM_Code=KUMMST.KUM_Code and ratesnew.Commcd=commmstnew.Commcd and ratesnew.rdate=#Lastdate#  
+
+<CFIF #URL.CAT# is "All" >
+<CFELSE>
+			and commmstnew.commgr='#URL.CAT#'
+</CFIF>
+
+
+<CFIF #URL.SORDER# is 1 >
+			ORDER BY ratesnew.Commcd,ratesnew.KUM_Code;
+<CFELSE>
+	<CFIF #URL.SORDER# is 2 >
+			ORDER BY ratesnew.Commcd,ratesnew.Rate DESC ,ratesnew.KUM_Code;
+	<CFELSE>
+		<CFIF #URL.SORDER# is 3 >
+			ORDER BY ratesnew.Commcd, ratesnew.Arrival DESC, ratesnew.Rate DESC ,ratesnew.KUM_Code;
+		<CFELSE>
+			ORDER BY ratesnew.KUM_Code, RDate DESC;
+		</CFIF>
+	</CFIF>
+</CFIF>
+
+</CFQUERY> 
+-->
+
+<!--
+
+<CFQUERY name="Mandicount" dataSource="AMBDB">
+SELECT Distinct ratesnew.KUM_Code as VF6 FROM RATESNEW Where Rdate=#Lastdate#  
+</CFQUERY>
+
+-->
+
+
+
+<TITLE>Mandi Online</TITLE>
+<style type="text/css">
+<!--
+.lmbaddress {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: bold; color: #FF3333; text-align: center}
+.runningtext {  font-family: tahoma; font-size: 10pt; font-style: normal; font-weight: bold; text-align: justify; color:white}
+.mandiheadings {  font-family: tahoma; font-size: 12pt; font-style: normal; font-weight: bold; text-align: justify; color: #FF6666}
+.erunningtext {  font-family: tahoma,arial; font-size: 9pt; font-style: normal; font-weight: bold; text-align: justify; color:white}
+
+
+a:active {  font-family: tahoma, verdana, arial; color: #CC0000}
+a:hover {  font-family: tahoma, verdana, arial; color: #FFFF00}
+a:link {  font-family: tahoma, verdana, arial; color: #FFFFCC}
+a:visited {  font-family: tahoma, verdana, arial; color: #FFFFCC}
+-->
+</style>
+
+</HEAD>
+<BODY BGCOLOR="007F48" link="#FFFF33">
+
+
+   
+<Table Border=0 width="100%">
+<tr>
+    <td><img Src="images/mandi1image.gif"
+    Border="0" Height="126" Width="135" Name="mandi1" align="left"></td>
+    <td Width="530" Height="27"><img Src="images/mandi1agriculture_marketing.gif"
+    Border="0" Height="27" Width="530" Name="mandi11" Alt="Agriculture Marketing Board" align="right"><BR>
+      <BR>
+      <img Src="images/mandi1mandi_online.gif" Border="0" Height="31" Width="451" Name="mandi12" Alt="Mandi Online" align="right"></td>
+  </tr>
+<tr>
+<td Colspan=2 align="right">
+<Form name="selcategory" action="" class="erunningtext">
+
+<!--
+<CFOutput>
+<CFIF #URL.CAT# is "All">
+-->
+
+Filter
+<!--
+
+<CFELSE>
+-->
+
+<A Href="mandishowtoday.asp?SORDER=#URL.SORDER#&CAT=All" Title="Show for all Categories">Remove Filter</A>
+<!--
+</CFIF>
+</CFOUTPUT>
+-->
+
+<Select name="selectcat" class="lmbaddress" onChange="document.selcategory.action='mandishowtoday.asp';document.selcategory.submit();"> 
+<Option Value="All">Select
+<Option Value="CEREALS">Cereals
+<Option Value="PULSES">Pulses
+<Option Value="OIL SEEDS">Oil Seeds
+<Option Value="MASALE">Masale
+<Option Value="FRUIT">Fruits
+<Option Value="VEGETABLE">Vegetables
+<Option Value="OTHERS">Others
+
+</Select>
+
+
+   
+</form>
+</td>
+</tr>
+</Table>
+<CFOutput query="Mandicount" Maxrows=1>
+<CFSET mcount = #recordcount#> </CFOUTPUT>
+<HR Size=1 Color="white">
+<CFOUTPUT query="Majorqry" MAXROWS=1>
+<Center>
+<Font class="mandiheadings"> <Font Size=-1  color="ffffff"><B>Total 532  Enteries Found for   Category from 70 Mandis for Monday, August 14, 2017</B></font></font></center> 
+</CFOUTPUT>
+<CFOUTPUT>
+<HR Size=1 Color="white">
+<TABLE Width=100% Border=1 cellpadding="3" cellspacing="0" bordercolor="#00A452" Color =Teal>
+  <TR bgcolor="FF9933"> <span class="mandiheadings"> 
+    <TD><font face="Verdana, Arial, Helvetica, sans-serif" size="-1" color="007D4A"><B><A Href="mandishowtoday.asp?SORDER=0" Title="Click to Sort on Mandi Names">Mandi 
+      Name</A></B></font></TD>
+    <TD><font face="Verdana, Arial, Helvetica, sans-serif" size="-1" color="007D4A"><B><A Href="mandishowtoday.asp?SORDER=1" Title="Click to Sort on Commodities">Commodity 
+      Name</A></B></font></TD>
+    <TD><font face="Verdana, Arial, Helvetica, sans-serif" size="-1" color="007D4A"> 
+      <B><A Href="mandishowtoday.asp?SORDER=2" Title="Click to Sort on Prices">Rate in Rupees per Qt.</A></B></font></TD>
+    <TD><font face="Verdana, Arial, Helvetica, sans-serif" size="-1" color="007D4A"><B><A Href="mandishowtoday.asp?SORDER=3" Title="Click to Sort on Arrivals">Arrival in Quintals</A></B></font></TD>
+    </span></TR>
+    
+ <!--   
+    
+</CFOUTPUT>
+<CFOUTPUT query="Majorqry">
+-->
+
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">8000</span></TD>
+<TD><span class="eRunningtext">303</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">80</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">9750</span></TD>
+<TD><span class="eRunningtext">1048</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">1600</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">9000</span></TD>
+<TD><span class="eRunningtext">208</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">100</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=APL"  Title="Click to View Mandiwise Graph of APPLE">APPLE</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">134</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=AR"  Title="Click to View Mandiwise Graph of ARHAR (LOCAL)">ARHAR (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">2750</span></TD>
+<TD><span class="eRunningtext">11</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BADI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=AR"  Title="Click to View Mandiwise Graph of ARHAR (LOCAL)">ARHAR (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3426</span></TD>
+<TD><span class="eRunningtext">16</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=AR"  Title="Click to View Mandiwise Graph of ARHAR (LOCAL)">ARHAR (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">2900</span></TD>
+<TD><span class="eRunningtext">82</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=AR"  Title="Click to View Mandiwise Graph of ARHAR (LOCAL)">ARHAR (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3050</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">213</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">240</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">2315</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">900</span></TD>
+<TD><span class="eRunningtext">430</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">269</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">200</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BAN"  Title="Click to View Mandiwise Graph of BANANA">BANANA</A></span></td>
+<TD><span class="eRunningtext">950</span></TD>
+<TD><span class="eRunningtext">164</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BG"  Title="Click to View Mandiwise Graph of BOTTLE GOURD">BOTTLE GOURD</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">94</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BG"  Title="Click to View Mandiwise Graph of BOTTLE GOURD">BOTTLE GOURD</A></span></td>
+<TD><span class="eRunningtext">1250</span></TD>
+<TD><span class="eRunningtext">272</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BG"  Title="Click to View Mandiwise Graph of BOTTLE GOURD">BOTTLE GOURD</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">455</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BG"  Title="Click to View Mandiwise Graph of BOTTLE GOURD">BOTTLE GOURD</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">65</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BG"  Title="Click to View Mandiwise Graph of BOTTLE GOURD">BOTTLE GOURD</A></span></td>
+<TD><span class="eRunningtext">800</span></TD>
+<TD><span class="eRunningtext">99</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BGL"  Title="Click to View Mandiwise Graph of BRINJAL">BRINJAL</A></span></td>
+<TD><span class="eRunningtext">1100</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BGL"  Title="Click to View Mandiwise Graph of BRINJAL">BRINJAL</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">17</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BGL"  Title="Click to View Mandiwise Graph of BRINJAL">BRINJAL</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">105</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BGL"  Title="Click to View Mandiwise Graph of BRINJAL">BRINJAL</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">40</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BGL"  Title="Click to View Mandiwise Graph of BRINJAL">BRINJAL</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">23</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1090</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1125</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1125</span></TD>
+<TD><span class="eRunningtext">58</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1105</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SADULPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">11</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHADRA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1180</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1190</span></TD>
+<TD><span class="eRunningtext">85</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1190</span></TD>
+<TD><span class="eRunningtext">447</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1250</span></TD>
+<TD><span class="eRunningtext">217</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTPUTLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">455</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LALSOT
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1143</span></TD>
+<TD><span class="eRunningtext">19</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BARMER
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1400</span></TD>
+<TD><span class="eRunningtext">1795</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEEDWANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1175</span></TD>
+<TD><span class="eRunningtext">1061</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+FATEHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KUCHAMAN CITY
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1165</span></TD>
+<TD><span class="eRunningtext">186</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SIKAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1235</span></TD>
+<TD><span class="eRunningtext">9</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJB"  Title="Click to View Mandiwise Graph of BAJRA BOLD">BAJRA BOLD</A></span></td>
+<TD><span class="eRunningtext">1175</span></TD>
+<TD><span class="eRunningtext">152</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1190</span></TD>
+<TD><span class="eRunningtext">288</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BADI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1188</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1147</span></TD>
+<TD><span class="eRunningtext">271</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHARATPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1192</span></TD>
+<TD><span class="eRunningtext">4228</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DHOLPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1170</span></TD>
+<TD><span class="eRunningtext">490</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1190</span></TD>
+<TD><span class="eRunningtext">1685</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHERLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1165</span></TD>
+<TD><span class="eRunningtext">134</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BJS"  Title="Click to View Mandiwise Graph of BAJRA SMALL">BAJRA SMALL</A></span></td>
+<TD><span class="eRunningtext">1300</span></TD>
+<TD><span class="eRunningtext">28</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHILWARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1340</span></TD>
+<TD><span class="eRunningtext">8</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1328</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1317</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1345</span></TD>
+<TD><span class="eRunningtext">15</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1370</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1250</span></TD>
+<TD><span class="eRunningtext">14</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+TONK
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1233</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1345</span></TD>
+<TD><span class="eRunningtext">292</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1400</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHARATPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1376</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1315</span></TD>
+<TD><span class="eRunningtext">401</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1300</span></TD>
+<TD><span class="eRunningtext">72</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1327</span></TD>
+<TD><span class="eRunningtext">180</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1350</span></TD>
+<TD><span class="eRunningtext">23</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTPUTLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1250</span></TD>
+<TD><span class="eRunningtext">145</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LALSOT
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1260</span></TD>
+<TD><span class="eRunningtext">26</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1450</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SIKAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1275</span></TD>
+<TD><span class="eRunningtext">167</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1330</span></TD>
+<TD><span class="eRunningtext">285</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GAJSINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1280</span></TD>
+<TD><span class="eRunningtext">24</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KESRISINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1245</span></TD>
+<TD><span class="eRunningtext">75</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1334</span></TD>
+<TD><span class="eRunningtext">180</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BL"  Title="Click to View Mandiwise Graph of BARLEY">BARLEY</A></span></td>
+<TD><span class="eRunningtext">1410</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BTG"  Title="Click to View Mandiwise Graph of BITTER GOURD">BITTER GOURD</A></span></td>
+<TD><span class="eRunningtext">2600</span></TD>
+<TD><span class="eRunningtext">42</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BTG"  Title="Click to View Mandiwise Graph of BITTER GOURD">BITTER GOURD</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">144</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BTG"  Title="Click to View Mandiwise Graph of BITTER GOURD">BITTER GOURD</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">139</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BTG"  Title="Click to View Mandiwise Graph of BITTER GOURD">BITTER GOURD</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=BTG"  Title="Click to View Mandiwise Graph of BITTER GOURD">BITTER GOURD</A></span></td>
+<TD><span class="eRunningtext">2250</span></TD>
+<TD><span class="eRunningtext">62</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CB"  Title="Click to View Mandiwise Graph of CUCUMBER">CUCUMBER</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">92</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CB"  Title="Click to View Mandiwise Graph of CUCUMBER">CUCUMBER</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">84</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CB"  Title="Click to View Mandiwise Graph of CUCUMBER">CUCUMBER</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">1681</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CB"  Title="Click to View Mandiwise Graph of CUCUMBER">CUCUMBER</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">278</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CB"  Title="Click to View Mandiwise Graph of CUCUMBER">CUCUMBER</A></span></td>
+<TD><span class="eRunningtext">800</span></TD>
+<TD><span class="eRunningtext">205</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CB"  Title="Click to View Mandiwise Graph of CUCUMBER">CUCUMBER</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">1300</span></TD>
+<TD><span class="eRunningtext">38</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">900</span></TD>
+<TD><span class="eRunningtext">1235</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">274</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">181</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">40</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBG"  Title="Click to View Mandiwise Graph of CABBAGE">CABBAGE</A></span></td>
+<TD><span class="eRunningtext">800</span></TD>
+<TD><span class="eRunningtext">97</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBL"  Title="Click to View Mandiwise Graph of CUCUMBER(L)">CUCUMBER(L)</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">17</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBL"  Title="Click to View Mandiwise Graph of CUCUMBER(L)">CUCUMBER(L)</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">215</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBL"  Title="Click to View Mandiwise Graph of CUCUMBER(L)">CUCUMBER(L)</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">105</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBN"  Title="Click to View Mandiwise Graph of CLUSTER BEANS">CLUSTER BEANS</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBN"  Title="Click to View Mandiwise Graph of CLUSTER BEANS">CLUSTER BEANS</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">270</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CBN"  Title="Click to View Mandiwise Graph of CLUSTER BEANS">CLUSTER BEANS</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">11</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">77</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">24</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">2600</span></TD>
+<TD><span class="eRunningtext">152</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">205</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">210</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CFW"  Title="Click to View Mandiwise Graph of CAULI FLOWER">CAULI FLOWER</A></span></td>
+<TD><span class="eRunningtext">3250</span></TD>
+<TD><span class="eRunningtext">33</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+FATEHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CHL"  Title="Click to View Mandiwise Graph of CHAULA">CHAULA</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">12</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KUCHAMAN CITY
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CHL"  Title="Click to View Mandiwise Graph of CHAULA">CHAULA</A></span></td>
+<TD><span class="eRunningtext">2851</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAWALGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CHL"  Title="Click to View Mandiwise Graph of CHAULA">CHAULA</A></span></td>
+<TD><span class="eRunningtext">3300</span></TD>
+<TD><span class="eRunningtext">152</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SIKAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CHL"  Title="Click to View Mandiwise Graph of CHAULA">CHAULA</A></span></td>
+<TD><span class="eRunningtext">3800</span></TD>
+<TD><span class="eRunningtext">41</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLD"  Title="Click to View Mandiwise Graph of CHILLIES DRY">CHILLIES DRY</A></span></td>
+<TD><span class="eRunningtext">6550</span></TD>
+<TD><span class="eRunningtext">179</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLD"  Title="Click to View Mandiwise Graph of CHILLIES DRY">CHILLIES DRY</A></span></td>
+<TD><span class="eRunningtext">11000</span></TD>
+<TD><span class="eRunningtext">16</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">145</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">128</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">4250</span></TD>
+<TD><span class="eRunningtext">164</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">395</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">258</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CLY"  Title="Click to View Mandiwise Graph of CHILLY">CHILLY</A></span></td>
+<TD><span class="eRunningtext">2750</span></TD>
+<TD><span class="eRunningtext">160</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CNL"  Title="Click to View Mandiwise Graph of CORIANDER(LV)">CORIANDER(LV)</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CNL"  Title="Click to View Mandiwise Graph of CORIANDER(LV)">CORIANDER(LV)</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">39</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CRT"  Title="Click to View Mandiwise Graph of CARROT">CARROT</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">1</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CRT"  Title="Click to View Mandiwise Graph of CARROT">CARROT</A></span></td>
+<TD><span class="eRunningtext">1400</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CRT"  Title="Click to View Mandiwise Graph of CARROT">CARROT</A></span></td>
+<TD><span class="eRunningtext">900</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CRT"  Title="Click to View Mandiwise Graph of CARROT">CARROT</A></span></td>
+<TD><span class="eRunningtext">1300</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CSM"  Title="Click to View Mandiwise Graph of CAPSICUM">CAPSICUM</A></span></td>
+<TD><span class="eRunningtext">2400</span></TD>
+<TD><span class="eRunningtext">17</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CSM"  Title="Click to View Mandiwise Graph of CAPSICUM">CAPSICUM</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">28</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CSM"  Title="Click to View Mandiwise Graph of CAPSICUM">CAPSICUM</A></span></td>
+<TD><span class="eRunningtext">4250</span></TD>
+<TD><span class="eRunningtext">143</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CSM"  Title="Click to View Mandiwise Graph of CAPSICUM">CAPSICUM</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">125</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CSM"  Title="Click to View Mandiwise Graph of CAPSICUM">CAPSICUM</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=CSM"  Title="Click to View Mandiwise Graph of CAPSICUM">CAPSICUM</A></span></td>
+<TD><span class="eRunningtext">2750</span></TD>
+<TD><span class="eRunningtext">19</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=DHB"  Title="Click to View Mandiwise Graph of DHANIA BOLD">DHANIA BOLD</A></span></td>
+<TD><span class="eRunningtext">4900</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=DHB"  Title="Click to View Mandiwise Graph of DHANIA BOLD">DHANIA BOLD</A></span></td>
+<TD><span class="eRunningtext">3850</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=DHB"  Title="Click to View Mandiwise Graph of DHANIA BOLD">DHANIA BOLD</A></span></td>
+<TD><span class="eRunningtext">3950</span></TD>
+<TD><span class="eRunningtext">720</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4800</span></TD>
+<TD><span class="eRunningtext">73</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHILWARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5025</span></TD>
+<TD><span class="eRunningtext">8</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4700</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4776</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5020</span></TD>
+<TD><span class="eRunningtext">185</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4925</span></TD>
+<TD><span class="eRunningtext">931</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4800</span></TD>
+<TD><span class="eRunningtext">169</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NEWAI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">107</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+TONK
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4938</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4950</span></TD>
+<TD><span class="eRunningtext">43</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">60</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">155</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5200</span></TD>
+<TD><span class="eRunningtext">800</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAJUWALA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5200</span></TD>
+<TD><span class="eRunningtext">153</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4972</span></TD>
+<TD><span class="eRunningtext">183</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SARDAR SHAHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5200</span></TD>
+<TD><span class="eRunningtext">150</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHADRA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5208</span></TD>
+<TD><span class="eRunningtext">17</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5246</span></TD>
+<TD><span class="eRunningtext">276</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SURATGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5115</span></TD>
+<TD><span class="eRunningtext">112</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">48</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4970</span></TD>
+<TD><span class="eRunningtext">297</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4554</span></TD>
+<TD><span class="eRunningtext">153</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LALSOT
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5055</span></TD>
+<TD><span class="eRunningtext">392</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5150</span></TD>
+<TD><span class="eRunningtext">495</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BUNDI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4809</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5150</span></TD>
+<TD><span class="eRunningtext">850</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SAWAI MADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4950</span></TD>
+<TD><span class="eRunningtext">33</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+FATEHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5150</span></TD>
+<TD><span class="eRunningtext">36</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4825</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5071</span></TD>
+<TD><span class="eRunningtext">77</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ANOOPGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4995</span></TD>
+<TD><span class="eRunningtext">266</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GAJSINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5085</span></TD>
+<TD><span class="eRunningtext">657</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GHARSANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5015</span></TD>
+<TD><span class="eRunningtext">269</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KESRISINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5057</span></TD>
+<TD><span class="eRunningtext">60</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAISINGH NAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5077</span></TD>
+<TD><span class="eRunningtext">680</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAWLA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4964</span></TD>
+<TD><span class="eRunningtext">124</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RIDHMALSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5186</span></TD>
+<TD><span class="eRunningtext">92</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5101</span></TD>
+<TD><span class="eRunningtext">732</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIKARANPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">256</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIVIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4937</span></TD>
+<TD><span class="eRunningtext">77</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=G"  Title="Click to View Mandiwise Graph of GRAM">GRAM</A></span></td>
+<TD><span class="eRunningtext">4450</span></TD>
+<TD><span class="eRunningtext">647</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GN"  Title="Click to View Mandiwise Graph of GROUNDNUT (WHITE)">GROUNDNUT (WHITE)</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">177</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GN"  Title="Click to View Mandiwise Graph of GROUNDNUT (WHITE)">GROUNDNUT (WHITE)</A></span></td>
+<TD><span class="eRunningtext">4200</span></TD>
+<TD><span class="eRunningtext">80</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GN"  Title="Click to View Mandiwise Graph of GROUNDNUT (WHITE)">GROUNDNUT (WHITE)</A></span></td>
+<TD><span class="eRunningtext">3750</span></TD>
+<TD><span class="eRunningtext">18</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BARMER
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GN"  Title="Click to View Mandiwise Graph of GROUNDNUT (WHITE)">GROUNDNUT (WHITE)</A></span></td>
+<TD><span class="eRunningtext">3625</span></TD>
+<TD><span class="eRunningtext">532</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GN"  Title="Click to View Mandiwise Graph of GROUNDNUT (WHITE)">GROUNDNUT (WHITE)</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">97</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GP"  Title="Click to View Mandiwise Graph of GREEN PEAS">GREEN PEAS</A></span></td>
+<TD><span class="eRunningtext">8000</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GP"  Title="Click to View Mandiwise Graph of GREEN PEAS">GREEN PEAS</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">88</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">2800</span></TD>
+<TD><span class="eRunningtext">35</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">2250</span></TD>
+<TD><span class="eRunningtext">267</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">2800</span></TD>
+<TD><span class="eRunningtext">520</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">99</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">3100</span></TD>
+<TD><span class="eRunningtext">6345</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">4155</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GRC"  Title="Click to View Mandiwise Graph of GARLIC">GARLIC</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GURW"  Title="Click to View Mandiwise Graph of GUR (WHOLE SALE)">GUR (WHOLE SALE)</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">1727</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GURW"  Title="Click to View Mandiwise Graph of GUR (WHOLE SALE)">GUR (WHOLE SALE)</A></span></td>
+<TD><span class="eRunningtext">3600</span></TD>
+<TD><span class="eRunningtext">348</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GV"  Title="Click to View Mandiwise Graph of GUAVA">GUAVA</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">47</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GV"  Title="Click to View Mandiwise Graph of GUAVA">GUAVA</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3450</span></TD>
+<TD><span class="eRunningtext">602</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">40</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3201</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">34</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">2950</span></TD>
+<TD><span class="eRunningtext">9</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">81</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BADI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3190</span></TD>
+<TD><span class="eRunningtext">35</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3302</span></TD>
+<TD><span class="eRunningtext">168</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHARATPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3490</span></TD>
+<TD><span class="eRunningtext">15</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">350</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHERLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3425</span></TD>
+<TD><span class="eRunningtext">134</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3676</span></TD>
+<TD><span class="eRunningtext">72</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAJUWALA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3750</span></TD>
+<TD><span class="eRunningtext">247</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LOONKARNSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3565</span></TD>
+<TD><span class="eRunningtext">210</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3475</span></TD>
+<TD><span class="eRunningtext">478</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SADULPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3568</span></TD>
+<TD><span class="eRunningtext">335</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SUJANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3450</span></TD>
+<TD><span class="eRunningtext">130</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHADRA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3576</span></TD>
+<TD><span class="eRunningtext">13</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3661</span></TD>
+<TD><span class="eRunningtext">762</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SURATGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3645</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3420</span></TD>
+<TD><span class="eRunningtext">100</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3314</span></TD>
+<TD><span class="eRunningtext">27</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3063</span></TD>
+<TD><span class="eRunningtext">288</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTPUTLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">22</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LALSOT
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3434</span></TD>
+<TD><span class="eRunningtext">41</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3450</span></TD>
+<TD><span class="eRunningtext">841</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3200</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEEDWANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">34</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+FATEHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3300</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KUCHAMAN CITY
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3565</span></TD>
+<TD><span class="eRunningtext">136</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3608</span></TD>
+<TD><span class="eRunningtext">203</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3475</span></TD>
+<TD><span class="eRunningtext">382</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ANOOPGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3538</span></TD>
+<TD><span class="eRunningtext">238</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GAJSINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3573</span></TD>
+<TD><span class="eRunningtext">194</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GHARSANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3470</span></TD>
+<TD><span class="eRunningtext">215</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KESRISINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3499</span></TD>
+<TD><span class="eRunningtext">48</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAISINGH NAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3600</span></TD>
+<TD><span class="eRunningtext">205</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAWLA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3622</span></TD>
+<TD><span class="eRunningtext">214</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RIDHMALSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3358</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3531</span></TD>
+<TD><span class="eRunningtext">92</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIKARANPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3395</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIVIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3490</span></TD>
+<TD><span class="eRunningtext">1</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GWR"  Title="Click to View Mandiwise Graph of GOWAR">GOWAR</A></span></td>
+<TD><span class="eRunningtext">3100</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">93</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">14</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">4400</span></TD>
+<TD><span class="eRunningtext">1011</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">138</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">1400</span></TD>
+<TD><span class="eRunningtext">240</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=GZR"  Title="Click to View Mandiwise Graph of GINGER">GINGER</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">31</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=IB"  Title="Click to View Mandiwise Graph of ISABGOLE">ISABGOLE</A></span></td>
+<TD><span class="eRunningtext">9500</span></TD>
+<TD><span class="eRunningtext">218</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=J"  Title="Click to View Mandiwise Graph of JOWAR LOCAL">JOWAR LOCAL</A></span></td>
+<TD><span class="eRunningtext">1775</span></TD>
+<TD><span class="eRunningtext">611</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=J"  Title="Click to View Mandiwise Graph of JOWAR LOCAL">JOWAR LOCAL</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=JW"  Title="Click to View Mandiwise Graph of JOWAR WHITE">JOWAR WHITE</A></span></td>
+<TD><span class="eRunningtext">1950</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=JW"  Title="Click to View Mandiwise Graph of JOWAR WHITE">JOWAR WHITE</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">14</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=JW"  Title="Click to View Mandiwise Graph of JOWAR WHITE">JOWAR WHITE</A></span></td>
+<TD><span class="eRunningtext">2250</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=JW"  Title="Click to View Mandiwise Graph of JOWAR WHITE">JOWAR WHITE</A></span></td>
+<TD><span class="eRunningtext">1975</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=JW"  Title="Click to View Mandiwise Graph of JOWAR WHITE">JOWAR WHITE</A></span></td>
+<TD><span class="eRunningtext">2100</span></TD>
+<TD><span class="eRunningtext">12</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=JW"  Title="Click to View Mandiwise Graph of JOWAR WHITE">JOWAR WHITE</A></span></td>
+<TD><span class="eRunningtext">1400</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">14</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">2600</span></TD>
+<TD><span class="eRunningtext">40</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">1700</span></TD>
+<TD><span class="eRunningtext">1652</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">390</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">44</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LMN"  Title="Click to View Mandiwise Graph of LEMON">LEMON</A></span></td>
+<TD><span class="eRunningtext">850</span></TD>
+<TD><span class="eRunningtext">69</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHILWARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LT"  Title="Click to View Mandiwise Graph of MASUR">MASUR</A></span></td>
+<TD><span class="eRunningtext">3900</span></TD>
+<TD><span class="eRunningtext">31</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=LT"  Title="Click to View Mandiwise Graph of MASUR">MASUR</A></span></td>
+<TD><span class="eRunningtext">4006</span></TD>
+<TD><span class="eRunningtext">37</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3188</span></TD>
+<TD><span class="eRunningtext">52</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DUNGARGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3426</span></TD>
+<TD><span class="eRunningtext">32</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LOONKARNSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3175</span></TD>
+<TD><span class="eRunningtext">298</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3071</span></TD>
+<TD><span class="eRunningtext">3177</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SARDAR SHAHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3007</span></TD>
+<TD><span class="eRunningtext">689</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3711</span></TD>
+<TD><span class="eRunningtext">193</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BARMER
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3450</span></TD>
+<TD><span class="eRunningtext">236</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">3150</span></TD>
+<TD><span class="eRunningtext">177</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KUCHAMAN CITY
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">2905</span></TD>
+<TD><span class="eRunningtext">18</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=M"  Title="Click to View Mandiwise Graph of MOTH">MOTH</A></span></td>
+<TD><span class="eRunningtext">2800</span></TD>
+<TD><span class="eRunningtext">11</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MI"  Title="Click to View Mandiwise Graph of METHI">METHI</A></span></td>
+<TD><span class="eRunningtext">2591</span></TD>
+<TD><span class="eRunningtext">225</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MI"  Title="Click to View Mandiwise Graph of METHI">METHI</A></span></td>
+<TD><span class="eRunningtext">2551</span></TD>
+<TD><span class="eRunningtext">112</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MI"  Title="Click to View Mandiwise Graph of METHI">METHI</A></span></td>
+<TD><span class="eRunningtext">2700</span></TD>
+<TD><span class="eRunningtext">360</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MI"  Title="Click to View Mandiwise Graph of METHI">METHI</A></span></td>
+<TD><span class="eRunningtext">2550</span></TD>
+<TD><span class="eRunningtext">398</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MI"  Title="Click to View Mandiwise Graph of METHI">METHI</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">560</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MI"  Title="Click to View Mandiwise Graph of METHI">METHI</A></span></td>
+<TD><span class="eRunningtext">2400</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3800</span></TD>
+<TD><span class="eRunningtext">9</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4650</span></TD>
+<TD><span class="eRunningtext">120</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4650</span></TD>
+<TD><span class="eRunningtext">614</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">93</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4156</span></TD>
+<TD><span class="eRunningtext">33</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAJUWALA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3881</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4250</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SADULPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4300</span></TD>
+<TD><span class="eRunningtext">175</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SUJANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4250</span></TD>
+<TD><span class="eRunningtext">47</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4130</span></TD>
+<TD><span class="eRunningtext">38</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3700</span></TD>
+<TD><span class="eRunningtext">274</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BARMER
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4150</span></TD>
+<TD><span class="eRunningtext">697</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4450</span></TD>
+<TD><span class="eRunningtext">240</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KUCHAMAN CITY
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4300</span></TD>
+<TD><span class="eRunningtext">468</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4826</span></TD>
+<TD><span class="eRunningtext">2402</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ANOOPGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3862</span></TD>
+<TD><span class="eRunningtext">9</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GHARSANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3950</span></TD>
+<TD><span class="eRunningtext">28</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KESRISINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3606</span></TD>
+<TD><span class="eRunningtext">1</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAWLA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3581</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3700</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIKARANPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ML"  Title="Click to View Mandiwise Graph of MOONG (LOCAL)">MOONG (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3750</span></TD>
+<TD><span class="eRunningtext">4</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MNG"  Title="Click to View Mandiwise Graph of MANGO">MANGO</A></span></td>
+<TD><span class="eRunningtext">6000</span></TD>
+<TD><span class="eRunningtext">212</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MNT"  Title="Click to View Mandiwise Graph of MINT">MINT</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MNT"  Title="Click to View Mandiwise Graph of MINT">MINT</A></span></td>
+<TD><span class="eRunningtext">700</span></TD>
+<TD><span class="eRunningtext">15</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1550</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHILWARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1615</span></TD>
+<TD><span class="eRunningtext">23</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1700</span></TD>
+<TD><span class="eRunningtext">32</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1238</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1650</span></TD>
+<TD><span class="eRunningtext">18</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1750</span></TD>
+<TD><span class="eRunningtext">12</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1735</span></TD>
+<TD><span class="eRunningtext">12</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MANDALGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1440</span></TD>
+<TD><span class="eRunningtext">70</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MR"  Title="Click to View Mandiwise Graph of MAIZE RED">MAIZE RED</A></span></td>
+<TD><span class="eRunningtext">1450</span></TD>
+<TD><span class="eRunningtext">458</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MSM"  Title="Click to View Mandiwise Graph of MOSAMBI">MOSAMBI</A></span></td>
+<TD><span class="eRunningtext">2800</span></TD>
+<TD><span class="eRunningtext">22</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MSM"  Title="Click to View Mandiwise Graph of MOSAMBI">MOSAMBI</A></span></td>
+<TD><span class="eRunningtext">2400</span></TD>
+<TD><span class="eRunningtext">49</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MSM"  Title="Click to View Mandiwise Graph of MOSAMBI">MOSAMBI</A></span></td>
+<TD><span class="eRunningtext">2250</span></TD>
+<TD><span class="eRunningtext">881</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MSM"  Title="Click to View Mandiwise Graph of MOSAMBI">MOSAMBI</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">330</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MSM"  Title="Click to View Mandiwise Graph of MOSAMBI">MOSAMBI</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">40</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MSM"  Title="Click to View Mandiwise Graph of MOSAMBI">MOSAMBI</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">72</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BUNDI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MW"  Title="Click to View Mandiwise Graph of MAIZE WHITE">MAIZE WHITE</A></span></td>
+<TD><span class="eRunningtext">1290</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MW"  Title="Click to View Mandiwise Graph of MAIZE WHITE">MAIZE WHITE</A></span></td>
+<TD><span class="eRunningtext">1330</span></TD>
+<TD><span class="eRunningtext">150</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MW"  Title="Click to View Mandiwise Graph of MAIZE WHITE">MAIZE WHITE</A></span></td>
+<TD><span class="eRunningtext">1450</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=MY"  Title="Click to View Mandiwise Graph of MAIZE YELLOW">MAIZE YELLOW</A></span></td>
+<TD><span class="eRunningtext">1430</span></TD>
+<TD><span class="eRunningtext">384</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">8</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">44</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">201</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">394</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">70</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=OKR"  Title="Click to View Mandiwise Graph of OKRA (LADY FINGER)">OKRA (LADY FINGER)</A></span></td>
+<TD><span class="eRunningtext">2750</span></TD>
+<TD><span class="eRunningtext">35</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONG"  Title="Click to View Mandiwise Graph of ORANGE">ORANGE</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">771</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">1686</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">3099</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">1400</span></TD>
+<TD><span class="eRunningtext">2480</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">410</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">400</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=ONI"  Title="Click to View Mandiwise Graph of ONION">ONION</A></span></td>
+<TD><span class="eRunningtext">1900</span></TD>
+<TD><span class="eRunningtext">832</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PA"  Title="Click to View Mandiwise Graph of PINE APPLE">PINE APPLE</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">4</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PA"  Title="Click to View Mandiwise Graph of PINE APPLE">PINE APPLE</A></span></td>
+<TD><span class="eRunningtext">4250</span></TD>
+<TD><span class="eRunningtext">325</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PA"  Title="Click to View Mandiwise Graph of PINE APPLE">PINE APPLE</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PA"  Title="Click to View Mandiwise Graph of PINE APPLE">PINE APPLE</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PA"  Title="Click to View Mandiwise Graph of PINE APPLE">PINE APPLE</A></span></td>
+<TD><span class="eRunningtext">2300</span></TD>
+<TD><span class="eRunningtext">99</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">78</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">6000</span></TD>
+<TD><span class="eRunningtext">48</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">5250</span></TD>
+<TD><span class="eRunningtext">1456</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">100</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">5600</span></TD>
+<TD><span class="eRunningtext">192</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">3800</span></TD>
+<TD><span class="eRunningtext">80</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PGT"  Title="Click to View Mandiwise Graph of POME GRANATE">POME GRANATE</A></span></td>
+<TD><span class="eRunningtext">3650</span></TD>
+<TD><span class="eRunningtext">49</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PM"  Title="Click to View Mandiwise Graph of PLUM">PLUM</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PM"  Title="Click to View Mandiwise Graph of PLUM">PLUM</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">750</span></TD>
+<TD><span class="eRunningtext">31</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">800</span></TD>
+<TD><span class="eRunningtext">33</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">850</span></TD>
+<TD><span class="eRunningtext">411</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">400</span></TD>
+<TD><span class="eRunningtext">65</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">500</span></TD>
+<TD><span class="eRunningtext">434</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">700</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PPK"  Title="Click to View Mandiwise Graph of PUMPKIN">PUMPKIN</A></span></td>
+<TD><span class="eRunningtext">500</span></TD>
+<TD><span class="eRunningtext">8</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PR"  Title="Click to View Mandiwise Graph of PEAR">PEAR</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">150</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PR"  Title="Click to View Mandiwise Graph of PEAR">PEAR</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">38</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PR"  Title="Click to View Mandiwise Graph of PEAR">PEAR</A></span></td>
+<TD><span class="eRunningtext">1900</span></TD>
+<TD><span class="eRunningtext">689</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PR"  Title="Click to View Mandiwise Graph of PEAR">PEAR</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">180</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">650</span></TD>
+<TD><span class="eRunningtext">419</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">500</span></TD>
+<TD><span class="eRunningtext">902</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">425</span></TD>
+<TD><span class="eRunningtext">4620</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">400</span></TD>
+<TD><span class="eRunningtext">2415</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">500</span></TD>
+<TD><span class="eRunningtext">1778</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">350</span></TD>
+<TD><span class="eRunningtext">500</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PTO"  Title="Click to View Mandiwise Graph of POTATO">POTATO</A></span></td>
+<TD><span class="eRunningtext">450</span></TD>
+<TD><span class="eRunningtext">727</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PYA"  Title="Click to View Mandiwise Graph of PAPAYA">PAPAYA</A></span></td>
+<TD><span class="eRunningtext">1450</span></TD>
+<TD><span class="eRunningtext">1422</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PYA"  Title="Click to View Mandiwise Graph of PAPAYA">PAPAYA</A></span></td>
+<TD><span class="eRunningtext">800</span></TD>
+<TD><span class="eRunningtext">365</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=PYA"  Title="Click to View Mandiwise Graph of PAPAYA">PAPAYA</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=RG"  Title="Click to View Mandiwise Graph of RIDGE GOURD">RIDGE GOURD</A></span></td>
+<TD><span class="eRunningtext">2200</span></TD>
+<TD><span class="eRunningtext">8</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=RG"  Title="Click to View Mandiwise Graph of RIDGE GOURD">RIDGE GOURD</A></span></td>
+<TD><span class="eRunningtext">1700</span></TD>
+<TD><span class="eRunningtext">51</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=RG"  Title="Click to View Mandiwise Graph of RIDGE GOURD">RIDGE GOURD</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">305</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=RG"  Title="Click to View Mandiwise Graph of RIDGE GOURD">RIDGE GOURD</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=RG"  Title="Click to View Mandiwise Graph of RIDGE GOURD">RIDGE GOURD</A></span></td>
+<TD><span class="eRunningtext">2400</span></TD>
+<TD><span class="eRunningtext">36</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SBT"  Title="Click to View Mandiwise Graph of SUGARBEET">SUGARBEET</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SBT"  Title="Click to View Mandiwise Graph of SUGARBEET">SUGARBEET</A></span></td>
+<TD><span class="eRunningtext">1200</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SBT"  Title="Click to View Mandiwise Graph of SUGARBEET">SUGARBEET</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">10</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BUNDI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SBY"  Title="Click to View Mandiwise Graph of SOYABEAN YELLOW">SOYABEAN YELLOW</A></span></td>
+<TD><span class="eRunningtext">2746</span></TD>
+<TD><span class="eRunningtext">67</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SBY"  Title="Click to View Mandiwise Graph of SOYABEAN YELLOW">SOYABEAN YELLOW</A></span></td>
+<TD><span class="eRunningtext">2830</span></TD>
+<TD><span class="eRunningtext">2460</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SAWAI MADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SBY"  Title="Click to View Mandiwise Graph of SOYABEAN YELLOW">SOYABEAN YELLOW</A></span></td>
+<TD><span class="eRunningtext">2650</span></TD>
+<TD><span class="eRunningtext">22</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SF"  Title="Click to View Mandiwise Graph of SAUNF">SAUNF</A></span></td>
+<TD><span class="eRunningtext">4750</span></TD>
+<TD><span class="eRunningtext">37</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3150</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3251</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3406</span></TD>
+<TD><span class="eRunningtext">143</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3725</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3200</span></TD>
+<TD><span class="eRunningtext">13</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">74</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NEWAI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3580</span></TD>
+<TD><span class="eRunningtext">1074</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+TONK
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3393</span></TD>
+<TD><span class="eRunningtext">239</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UNIYARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3403</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3500</span></TD>
+<TD><span class="eRunningtext">4926</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BADI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3479</span></TD>
+<TD><span class="eRunningtext">2089</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3427</span></TD>
+<TD><span class="eRunningtext">1477</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHARATPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3354</span></TD>
+<TD><span class="eRunningtext">6925</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEEG
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3413</span></TD>
+<TD><span class="eRunningtext">2256</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DHOLPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3380</span></TD>
+<TD><span class="eRunningtext">618</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KAMA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3365</span></TD>
+<TD><span class="eRunningtext">491</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">7022</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHERLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3480</span></TD>
+<TD><span class="eRunningtext">4965</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3520</span></TD>
+<TD><span class="eRunningtext">706</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3276</span></TD>
+<TD><span class="eRunningtext">35</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAJUWALA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">236</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LOONKARNSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3176</span></TD>
+<TD><span class="eRunningtext">75</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3108</span></TD>
+<TD><span class="eRunningtext">13</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHADRA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3355</span></TD>
+<TD><span class="eRunningtext">26</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3401</span></TD>
+<TD><span class="eRunningtext">104</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SURATGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3340</span></TD>
+<TD><span class="eRunningtext">45</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3410</span></TD>
+<TD><span class="eRunningtext">309</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3420</span></TD>
+<TD><span class="eRunningtext">341</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3150</span></TD>
+<TD><span class="eRunningtext">113</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTPUTLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3450</span></TD>
+<TD><span class="eRunningtext">1260</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LALSOT
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3433</span></TD>
+<TD><span class="eRunningtext">222</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3150</span></TD>
+<TD><span class="eRunningtext">589</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">1025</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SAWAI MADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">70</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3000</span></TD>
+<TD><span class="eRunningtext">109</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAWALGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">81</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SIKAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3348</span></TD>
+<TD><span class="eRunningtext">128</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ANOOPGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3316</span></TD>
+<TD><span class="eRunningtext">740</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GAJSINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3335</span></TD>
+<TD><span class="eRunningtext">807</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GHARSANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3292</span></TD>
+<TD><span class="eRunningtext">359</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KESRISINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3311</span></TD>
+<TD><span class="eRunningtext">99</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAISINGH NAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3326</span></TD>
+<TD><span class="eRunningtext">900</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAWLA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3313</span></TD>
+<TD><span class="eRunningtext">407</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RIDHMALSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3380</span></TD>
+<TD><span class="eRunningtext">120</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">1695</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIKARANPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3376</span></TD>
+<TD><span class="eRunningtext">440</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIVIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3264</span></TD>
+<TD><span class="eRunningtext">176</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SLH"  Title="Click to View Mandiwise Graph of MUSTARD (LAHA)">MUSTARD (LAHA)</A></span></td>
+<TD><span class="eRunningtext">3050</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SNH"  Title="Click to View Mandiwise Graph of SPINACH">SPINACH</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SNH"  Title="Click to View Mandiwise Graph of SPINACH">SPINACH</A></span></td>
+<TD><span class="eRunningtext">900</span></TD>
+<TD><span class="eRunningtext">219</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SPT"  Title="Click to View Mandiwise Graph of SAPOTA">SAPOTA</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SW"  Title="Click to View Mandiwise Graph of SUGAR (WHOLE SALE)">SUGAR (WHOLE SALE)</A></span></td>
+<TD><span class="eRunningtext">4100</span></TD>
+<TD><span class="eRunningtext">2865</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=SW"  Title="Click to View Mandiwise Graph of SUGAR (WHOLE SALE)">SUGAR (WHOLE SALE)</A></span></td>
+<TD><span class="eRunningtext">4100</span></TD>
+<TD><span class="eRunningtext">300</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TD"  Title="Click to View Mandiwise Graph of TINDA">TINDA</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TD"  Title="Click to View Mandiwise Graph of TINDA">TINDA</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">53</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TD"  Title="Click to View Mandiwise Graph of TINDA">TINDA</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TD"  Title="Click to View Mandiwise Graph of TINDA">TINDA</A></span></td>
+<TD><span class="eRunningtext">1000</span></TD>
+<TD><span class="eRunningtext">466</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TD"  Title="Click to View Mandiwise Graph of TINDA">TINDA</A></span></td>
+<TD><span class="eRunningtext">2000</span></TD>
+<TD><span class="eRunningtext">40</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">5100</span></TD>
+<TD><span class="eRunningtext">1</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NEWAI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">5900</span></TD>
+<TD><span class="eRunningtext">58</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">5926</span></TD>
+<TD><span class="eRunningtext">66</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOHAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">6521</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">6563</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">5750</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">6150</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SAWAI MADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLG"  Title="Click to View Mandiwise Graph of TIL (GAJJAR)">TIL (GAJJAR)</A></span></td>
+<TD><span class="eRunningtext">5900</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLW"  Title="Click to View Mandiwise Graph of TIL (WHITE)">TIL (WHITE)</A></span></td>
+<TD><span class="eRunningtext">6100</span></TD>
+<TD><span class="eRunningtext">43</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TLW"  Title="Click to View Mandiwise Graph of TIL (WHITE)">TIL (WHITE)</A></span></td>
+<TD><span class="eRunningtext">6275</span></TD>
+<TD><span class="eRunningtext">67</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TMT"  Title="Click to View Mandiwise Graph of TOMATO">TOMATO</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">180</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TMT"  Title="Click to View Mandiwise Graph of TOMATO">TOMATO</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">85</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TMT"  Title="Click to View Mandiwise Graph of TOMATO">TOMATO</A></span></td>
+<TD><span class="eRunningtext">4500</span></TD>
+<TD><span class="eRunningtext">1358</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TMT"  Title="Click to View Mandiwise Graph of TOMATO">TOMATO</A></span></td>
+<TD><span class="eRunningtext">5000</span></TD>
+<TD><span class="eRunningtext">335</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TMT"  Title="Click to View Mandiwise Graph of TOMATO">TOMATO</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TMT"  Title="Click to View Mandiwise Graph of TOMATO">TOMATO</A></span></td>
+<TD><span class="eRunningtext">3250</span></TD>
+<TD><span class="eRunningtext">187</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3400</span></TD>
+<TD><span class="eRunningtext">4</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3380</span></TD>
+<TD><span class="eRunningtext">19</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3420</span></TD>
+<TD><span class="eRunningtext">33</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3300</span></TD>
+<TD><span class="eRunningtext">23</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3350</span></TD>
+<TD><span class="eRunningtext">48</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3300</span></TD>
+<TD><span class="eRunningtext">13</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIMADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3450</span></TD>
+<TD><span class="eRunningtext">65</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GAJSINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3415</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GHARSANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3486</span></TD>
+<TD><span class="eRunningtext">2</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=TR"  Title="Click to View Mandiwise Graph of TARAMIRA">TARAMIRA</A></span></td>
+<TD><span class="eRunningtext">3250</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4600</span></TD>
+<TD><span class="eRunningtext">6</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4035</span></TD>
+<TD><span class="eRunningtext">24</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4870</span></TD>
+<TD><span class="eRunningtext">180</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4150</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+TONK
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3918</span></TD>
+<TD><span class="eRunningtext">36</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UNIYARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4136</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BUNDI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3825</span></TD>
+<TD><span class="eRunningtext">30</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4350</span></TD>
+<TD><span class="eRunningtext">1590</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SAWAI MADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">3950</span></TD>
+<TD><span class="eRunningtext">32</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=UR"  Title="Click to View Mandiwise Graph of URAD (LOCAL)">URAD (LOCAL)</A></span></td>
+<TD><span class="eRunningtext">4000</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ALWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1635</span></TD>
+<TD><span class="eRunningtext">1494</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BADI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1637</span></TD>
+<TD><span class="eRunningtext">483</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BAYANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1605</span></TD>
+<TD><span class="eRunningtext">511</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHARATPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1598</span></TD>
+<TD><span class="eRunningtext">2823</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEEG
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1592</span></TD>
+<TD><span class="eRunningtext">26</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DHOLPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1532</span></TD>
+<TD><span class="eRunningtext">160</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KAMA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1610</span></TD>
+<TD><span class="eRunningtext">142</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAIRTHAL
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1610</span></TD>
+<TD><span class="eRunningtext">1378</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHERLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1615</span></TD>
+<TD><span class="eRunningtext">965</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KHAJUWALA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1671</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NOKHA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1640</span></TD>
+<TD><span class="eRunningtext">34</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+ANOOPGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1686</span></TD>
+<TD><span class="eRunningtext">504</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GAJSINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1660</span></TD>
+<TD><span class="eRunningtext">60</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+GHARSANA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1640</span></TD>
+<TD><span class="eRunningtext">80</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KESRISINGHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1627</span></TD>
+<TD><span class="eRunningtext">43</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RAISINGH NAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1721</span></TD>
+<TD><span class="eRunningtext">350</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+RIDHMALSAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1658</span></TD>
+<TD><span class="eRunningtext">44</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1693</span></TD>
+<TD><span class="eRunningtext">483</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIKARANPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1640</span></TD>
+<TD><span class="eRunningtext">25</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIVIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=W82"  Title="Click to View Mandiwise Graph of WHEAT 1482">WHEAT 1482</A></span></td>
+<TD><span class="eRunningtext">1699</span></TD>
+<TD><span class="eRunningtext">15</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WLW"  Title="Click to View Mandiwise Graph of WOOL (WASHED)">WOOL (WASHED)</A></span></td>
+<TD><span class="eRunningtext">2830</span></TD>
+<TD><span class="eRunningtext">18</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BEAWAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1800</span></TD>
+<TD><span class="eRunningtext">4</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BHILWARA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1625</span></TD>
+<TD><span class="eRunningtext">128</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIJAYNAGAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">75</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DEOLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1568</span></TD>
+<TD><span class="eRunningtext">198</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KEKRI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1575</span></TD>
+<TD><span class="eRunningtext">50</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MADANGANJ KISHANGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">27</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MALPURA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1640</span></TD>
+<TD><span class="eRunningtext">111</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+MANDALGARH
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1640</span></TD>
+<TD><span class="eRunningtext">110</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NEWAI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">248</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+TONK
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1593</span></TD>
+<TD><span class="eRunningtext">158</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+CHOMU
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1630</span></TD>
+<TD><span class="eRunningtext">74</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+DAUSA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1603</span></TD>
+<TD><span class="eRunningtext">328</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1700</span></TD>
+<TD><span class="eRunningtext">121</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTPUTLI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1630</span></TD>
+<TD><span class="eRunningtext">129</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+LALSOT
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1577</span></TD>
+<TD><span class="eRunningtext">594</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1950</span></TD>
+<TD><span class="eRunningtext">239</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BUNDI
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1603</span></TD>
+<TD><span class="eRunningtext">325</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+KOTA
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1630</span></TD>
+<TD><span class="eRunningtext">3215</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SAWAI MADHOPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1558</span></TD>
+<TD><span class="eRunningtext">24</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+FATEHPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1705</span></TD>
+<TD><span class="eRunningtext">35</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SIKAR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1625</span></TD>
+<TD><span class="eRunningtext">12</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WM"  Title="Click to View Mandiwise Graph of WHEAT MAXICAN">WHEAT MAXICAN</A></span></td>
+<TD><span class="eRunningtext">1610</span></TD>
+<TD><span class="eRunningtext">261</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+AJMER (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WMN"  Title="Click to View Mandiwise Graph of WATER MELON">WATER MELON</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">3</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+BIKANER (WOOL, F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WMN"  Title="Click to View Mandiwise Graph of WATER MELON">WATER MELON</A></span></td>
+<TD><span class="eRunningtext">1600</span></TD>
+<TD><span class="eRunningtext">5</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+SRIGANGANAGAR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WMN"  Title="Click to View Mandiwise Graph of WATER MELON">WATER MELON</A></span></td>
+<TD><span class="eRunningtext">2500</span></TD>
+<TD><span class="eRunningtext">20</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+UDAIPUR (F & V)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=WMN"  Title="Click to View Mandiwise Graph of WATER MELON">WATER MELON</A></span></td>
+<TD><span class="eRunningtext">1500</span></TD>
+<TD><span class="eRunningtext">7</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JAIPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=Z"  Title="Click to View Mandiwise Graph of JEERA (CUMIN)">JEERA (CUMIN)</A></span></td>
+<TD><span class="eRunningtext">17250</span></TD>
+<TD><span class="eRunningtext">0</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+JODHPUR (GRAIN)
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=Z"  Title="Click to View Mandiwise Graph of JEERA (CUMIN)">JEERA (CUMIN)</A></span></td>
+<TD><span class="eRunningtext">15500</span></TD>
+<TD><span class="eRunningtext">90</span></TD>
+</TR>
+
+
+
+<TR>
+<TD><span class="Runningtext">
+NAGAUR
+</span></TD>
+<TD><span class="Runningtext"><A Href="bar.asp?COMMCD=Z"  Title="Click to View Mandiwise Graph of JEERA (CUMIN)">JEERA (CUMIN)</A></span></td>
+<TD><span class="eRunningtext">17700</span></TD>
+<TD><span class="eRunningtext">241</span></TD>
+</TR>
+
+	
+
+<!-- </CFOUTPUT> 
+-->
+</TABLE>
+  
+
+
+<div align="left"> 
+  <p align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="-2"><b><a href="mandiselect.asp">Back</a></b></font></p>
+</div><div style="DISPLAY: none">
+</div>
+</BODY></HTML>
+
+
+
